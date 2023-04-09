@@ -57,7 +57,7 @@ To use your own controller for character movement while also using this script, 
 
 3. After connecting your physical controller and enabling the addon, run the script. The script will emulate a second virtual Xbox 360 controller, allowing the script to control character abilities.
 
-By connecting your physical controller before running the script, you ensure that World of Warcraft detects it as the first controller, allowing you to retain full control over character movement. Otherwise, controller movement will be disabled while the script is running and an MNK must be used to move the character.
+By connecting your physical controller before running the script, you ensure that your game detects it as the first controller, allowing you to retain full control over character movement. Otherwise, your game may disable controller movement while the script is running as it has taken 1st position and a MNK must be used to move the character while the script is running.
 
 ## Usage
 
