@@ -23,7 +23,7 @@ Please utilize this script in a manner that promotes learning and understanding 
 
 ## Usage
 
-Before using this script, please ensure you have the vgamepad library installed, a 'config.ini' file set up with key bindings, and a separate folder called 'rotations' containing rotation configuration files for different game classes or builds.
+Before using this script, please ensure you have the vgamepad library installed, a 'YOURGAME.ini' file set up with key bindings in a seperate folder called 'bindings', and a separate folder called 'rotations' containing rotation configuration files for different game classes or builds.
 
 When running the script, it will prompt you to press a specific hotkey combination to toggle the combat rotation on and off. Note that this functionality is provided for educational purposes and should not be used to gain an unfair advantage or violate the terms of service of any game.
 
