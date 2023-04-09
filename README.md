@@ -21,12 +21,6 @@ The primary goal of this project is to provide a learning resource for users int
 
 Please utilize this script in a manner that promotes learning and understanding of the underlying concepts without violating any terms of service, EULA, or other legal and ethical guidelines.
 
-## Usage
-
-Before using this script, please ensure you have the vgamepad library installed, a 'YOURGAME.ini' file set up with key bindings in a seperate folder called 'bindings', and a separate folder called 'rotations' containing rotation configuration files for different game classes or builds.
-
-When running the script, it will prompt you to press a specific hotkey combination to toggle the combat rotation on and off. Note that this functionality is provided for educational purposes and should not be used to gain an unfair advantage or violate the terms of service of any game.
-
 ## Contributing
 
 Contributions to this project should focus on improving its educational value or expanding its capabilities for learning and experimentation, without promoting or enabling cheating or exploitation in any game.
@@ -66,6 +60,10 @@ To use your own controller for character movement while also using this script, 
 By connecting your physical controller before running the script, you ensure that World of Warcraft detects it as the first controller, allowing you to retain full control over character movement. Otherwise, controller movement will be disabled while the script is running and an MNK must be used to move the character.
 
 ## Usage
+
+Before using this script, please ensure you have the vgamepad library installed, a 'YOURGAME.ini' file set up with key bindings in a seperate folder called 'bindings', and a separate folder called 'rotations' containing rotation configuration files for different game classes or builds.
+
+When running the script, it will prompt you to press a specific hotkey combination to toggle the combat rotation on and off. Note that this functionality is provided for educational purposes and should not be used to gain an unfair advantage or violate the terms of service of any game.
 
 1. Ensure you have completed the installation process and properly set up the controller as described in the [Installation and Setup](#installation-and-setup) section.
 
