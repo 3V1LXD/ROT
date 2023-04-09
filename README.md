@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="src/assets/ROT.png" alt="ROT Logo" />
+  <img src="src/assets/ROT.jpg" alt="ROT Logo" />
 </p>
 
 # ROT - Game Input Emulation Script
