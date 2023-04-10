@@ -153,73 +153,72 @@ keep_running = False
 thread_running = True
 
 
+def trigger_action(trigger_type):
+    trigger_func = {
+        "LT_": left_trigger,
+        "LTRT_": lambda: [left_trigger(), right_trigger()],
+        "RT_": right_trigger,
+    }
+
+    if trigger_type in trigger_func:
+        trigger_func[trigger_type]()
+        update()
+    else:
+        lt_release()
+        update()
+        rt_release()
+        update()
+
+
+def press_button(button, bound_ability):
+    trigger_prefixes = ['LT_', 'LTRT_', 'RT_']
+    for prefix in trigger_prefixes:
+        if prefix in button:
+            button = button.replace(prefix, '')
+
+    press(gpad[button])
+    print(f'Activating {bound_ability} with {button}')
+    update()
+
+
+def activate_ability(ability):
+    if ', ' in ability:
+        ability_delay = int(ability.split(', ')[1]) / 1000
+        ability = ability.split(', ')[0]
+    else:
+        ability_delay = ABILITY_DELAY
+
+    for bound_ability, button in buttons.items():
+        if bound_ability in ability:
+            trigger_type = button.split('_')[0] + '_'
+            trigger_action(trigger_type)
+            time.sleep(BUTTON_DELAY)
+            press_button(button, bound_ability)
+            time.sleep(BUTTON_DELAY)
+            reset()
+            update()
+            time.sleep(ability_delay)
+
+
 def run_loop():
     """
     Function that runs the main loop for executing the rotation.
     The loop runs indefinitely as long as thread_running is True, but the rotation execution is controlled by the keep_running flag.
     """
     global keep_running, thread_running
+
     while thread_running:
         if keep_running:
             print("Running rotation...")
-            # load new config file from rotations folder
             config.read(ROTATION_FILE)
             rotation = config['ROT']['Rotation'].split('\n')
-            # spam rotation
+
             for ability in rotation:
                 if keep_running:
-                    if ', ' in ability:
-                        ability_delay = int(ability.split(', ')[1]) / 1000
-                        ability = ability.split(', ')[0]
-                    else:
-                        ability_delay = ABILITY_DELAY
+                    activate_ability(ability)
 
-                    for bound_ability, button in buttons.items():
-                        if bound_ability in ability:
-                            # check if button includes a trigger pull
-                            if 'LT_' in button:
-                                left_trigger()
-                                update()
-                            elif 'LTRT_' in button:
-                                left_trigger()
-                                update()
-                                right_trigger()
-                                update()
-                            elif 'RT_' in button:
-                                right_trigger()
-                                update()
-                            else:
-                                lt_release()
-                                update()
-                                rt_release()
-                                update()
-
-                            # wait for trigger to be pulled or released
-                            # vgamepad doesn't seem to support multiple presses/releases in a single update
-                            # so we need to wait for the trigger before pressing another button
-                            time.sleep(BUTTON_DELAY)
-
-                            if button != 'RIGHT_SHOULDER' and button != 'LEFT_SHOULDER' and button != 'RIGHT_THUMB' and button != 'LEFT_THUMB' and button != 'START' and button != 'BACK' and button != 'GUIDE' and button != 'DPAD_UP' and button != 'DPAD_DOWN' and button != 'DPAD_LEFT' and button != 'DPAD_RIGHT':
-                                if '_' in button:
-                                    button = '_'.join(button.split('_')[1:])
-
-                            press(gpad[button])
-                            print('Activating ' + bound_ability +
-                                  ' with ' + button)
-
-                            # wait for ability delay
-                            update()
-                            time.sleep(ability_delay)
-
-                            # wait for button to be released
-                            reset()
-                            update()
-                            time.sleep(BUTTON_DELAY)
-
-            # Adjust this delay as needed to reduce CPU usage when the loop is running
             time.sleep(KEEP_RUNNING_DELAY)
         else:
-            # Adjust this delay as needed to reduce CPU usage when the loop is not running
             time.sleep(RUN_LOOP_DELAY)
 
 
