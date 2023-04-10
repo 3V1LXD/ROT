@@ -179,17 +179,24 @@ def run_loop():
                             # check if button includes a trigger pull
                             if 'LT_' in button:
                                 left_trigger()
+                                update()
                             elif 'LTRT_' in button:
-                                lr_trigger()
+                                left_trigger()
+                                update()
+                                right_trigger()
+                                update()
                             elif 'RT_' in button:
                                 right_trigger()
+                                update()
                             else:
-                                lrt_release()
+                                lt_release()
+                                update()
+                                rt_release()
+                                update()
 
                             # wait for trigger to be pulled or released
                             # vgamepad doesn't seem to support multiple presses/releases in a single update
                             # so we need to wait for the trigger before pressing another button
-                            update()
                             time.sleep(BUTTON_DELAY)
 
                             if button != 'RIGHT_SHOULDER' and button != 'LEFT_SHOULDER' and button != 'RIGHT_THUMB' and button != 'LEFT_THUMB' and button != 'START' and button != 'BACK' and button != 'GUIDE' and button != 'DPAD_UP' and button != 'DPAD_DOWN' and button != 'DPAD_LEFT' and button != 'DPAD_RIGHT':
