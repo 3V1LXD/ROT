@@ -154,6 +154,11 @@ thread_running = True
 
 
 def trigger_action(trigger_type):
+    """
+    Perform the specified trigger action and update the gamepad state.
+
+    :param trigger_type: The trigger action to be performed (e.g., 'LT_', 'LTRT_', or 'RT_')
+    """
     trigger_func = {
         "LT_": left_trigger,
         "LTRT_": lambda: [left_trigger(), right_trigger()],
@@ -171,6 +176,12 @@ def trigger_action(trigger_type):
 
 
 def press_button(button, bound_ability):
+    """
+    Press the specified button and print the bound ability being activated.
+
+    :param button: The button to be pressed
+    :param bound_ability: The ability associated with the button
+    """
     trigger_prefixes = ['LT_', 'LTRT_', 'RT_']
     for prefix in trigger_prefixes:
         if prefix in button:
@@ -182,6 +193,12 @@ def press_button(button, bound_ability):
 
 
 def activate_ability(ability):
+    """
+    Activate an ability by performing the associated trigger action, pressing the button,
+    and updating the gamepad state.
+
+    :param ability: The ability to be activated
+    """
     if ', ' in ability:
         ability_delay = int(ability.split(', ')[1]) / 1000
         ability = ability.split(', ')[0]
