@@ -179,10 +179,10 @@ def run_loop():
                             # check if button includes a trigger pull
                             if 'LT_' in button:
                                 left_trigger()
-                            elif 'RT_' in button:
-                                right_trigger()
                             elif 'LTRT_' in button:
                                 lr_trigger()
+                            elif 'RT_' in button:
+                                right_trigger()
                             else:
                                 lrt_release()
 
