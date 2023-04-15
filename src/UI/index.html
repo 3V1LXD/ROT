@@ -12,6 +12,7 @@
       integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
       crossorigin="anonymous"
     />
+    <link rel="stylesheet" href="app.css" />
   </head>
   <body>
     <!-- Tab navigation -->
@@ -53,7 +54,6 @@
         >
       </li>
     </ul>
-
     <!-- Tab content -->
     <div class="tab-content" id="configTabContent">
       <div
@@ -64,8 +64,9 @@
       >
         <!-- Config.ini editing interface -->
         <input type="file" id="config-file-input" />
-        <pre id="config-file-content"></pre>
-        <button id="config-save-btn">Save Config Changes</button>
+        <div id="config-file-content">
+          <form id="config-file-form"></form>
+        </div>
       </div>
       <div
         class="tab-pane fade"
@@ -73,10 +74,15 @@
         role="tabpanel"
         aria-labelledby="bindings-tab"
       >
-        <!-- Bindings/WOW.ini editing interface -->
-        <input type="file" id="bindings-file-input" />
-        <pre id="bindings-file-content"></pre>
-        <button id="bindings-save-btn">Save Bindings Changes</button>
+        <!-- Bindings editing interface -->
+        <div class="bindings-load-buttons">
+          <input type="file" id="bindings-file-input" />
+          <!-- add button to create new bindings file -->
+          <button id="create-bindings-file">New</button>
+        </div>
+        <div id="bindings-file-content">
+          <form id="bindings-file-form"></form>
+        </div>
       </div>
       <div
         class="tab-pane fade"
@@ -84,14 +90,18 @@
         role="tabpanel"
         aria-labelledby="rotations-tab"
       >
-        <!-- Rotations/WOW_warrior_arms.ini editing interface -->
-        <input type="file" id="rotations-file-input" />
-        <pre id="rotations-file-content"></pre>
-        <button id="rotations-save-btn">Save Rotations Changes</button>
+        <!-- Rotations editing interface -->
+        <div class="rotations-load-buttons">
+          <input type="file" id="rotations-file-input" />
+          <!-- add button to create new rotations file -->
+          <button id="create-rotations-file">New</button>
+        </div>
+        <div id="rotations-file-content">
+          <form id="rotations-file-form"></form>
+        </div>
       </div>
     </div>
-
-    <script src="app.js"></script>
+    <script type="module" src="app.js"></script>
     <!-- Add jQuery and Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.6.4.min.js"

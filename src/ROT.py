@@ -194,9 +194,9 @@ def activate_ability(ability):
 
     :param ability: The ability to be activated
     """
-    if ', ' in ability:
-        ability_delay = int(ability.split(', ')[1]) / 1000
-        ability = ability.split(', ')[0]
+    if ',' in ability:
+        ability_delay = int(ability.split(',')[1]) / 1000
+        ability = ability.split(',')[0]
     else:
         ability_delay = ABILITY_DELAY
 
@@ -223,7 +223,15 @@ def run_loop():
         if keep_running:
             print("Running rotation...")
             config.read('rotations/' + ROTATION_FILE)
-            rotation = config['ROT']['Rotation'].split('\n')
+            # Rotation = ['Auto Attack','Charge,500','Rallying Cry','Warbreaker','Sweeping Strikes','Rend','Overpower','Overpower','Mortal Strike','Execute','Pummel','Cleave','Avatar,3000','Overpower','Execute','Impending Victory','Die by the Sword','Bitter Immunity','Whirlwind','Overpower','Bladestorm,3000','Execute','Slam']
+            rotation = config['ROT']['Rotation'].replace('[', "")
+            rotation = rotation.replace(']', "")
+            # split by "','"
+            rotation = rotation.split("','")
+
+            # remove quotes
+            rotation = [x.replace("'", "") for x in rotation]
+            print(rotation)
 
             for ability in rotation:
                 if keep_running:
