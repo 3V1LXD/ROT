@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PWA INI Editor</title>
+    <link rel="manifest" href="manifest.json" />
+    <!-- Add Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css"
+      integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- Tab navigation -->
+    <ul class="nav nav-tabs" id="configTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link active"
+          id="config-tab"
+          data-bs-toggle="tab"
+          href="#config"
+          role="tab"
+          aria-controls="config"
+          aria-selected="true"
+          >Config</a
+        >
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link"
+          id="bindings-tab"
+          data-bs-toggle="tab"
+          href="#bindings"
+          role="tab"
+          aria-controls="bindings"
+          aria-selected="false"
+          >Bindings</a
+        >
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link"
+          id="rotations-tab"
+          data-bs-toggle="tab"
+          href="#rotations"
+          role="tab"
+          aria-controls="rotations"
+          aria-selected="false"
+          >Rotations</a
+        >
+      </li>
+    </ul>
+
+    <!-- Tab content -->
+    <div class="tab-content" id="configTabContent">
+      <div
+        class="tab-pane fade show active"
+        id="config"
+        role="tabpanel"
+        aria-labelledby="config-tab"
+      >
+        <!-- Config.ini editing interface -->
+        <input type="file" id="config-file-input" />
+        <pre id="config-file-content"></pre>
+        <button id="config-save-btn">Save Config Changes</button>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="bindings"
+        role="tabpanel"
+        aria-labelledby="bindings-tab"
+      >
+        <!-- Bindings/WOW.ini editing interface -->
+        <input type="file" id="bindings-file-input" />
+        <pre id="bindings-file-content"></pre>
+        <button id="bindings-save-btn">Save Bindings Changes</button>
+      </div>
+      <div
+        class="tab-pane fade"
+        id="rotations"
+        role="tabpanel"
+        aria-labelledby="rotations-tab"
+      >
+        <!-- Rotations/WOW_warrior_arms.ini editing interface -->
+        <input type="file" id="rotations-file-input" />
+        <pre id="rotations-file-content"></pre>
+        <button id="rotations-save-btn">Save Rotations Changes</button>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <!-- Add jQuery and Bootstrap JS -->
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"
+      integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+    "name": "PWA INI Editor",
+    "short_name": "INI Editor",
+    "start_url": "index.html",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "scope": "./"
+}

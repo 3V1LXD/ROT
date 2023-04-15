@@ -7,26 +7,21 @@ import time
 #############################################
 # Application Variables
 
-# Game bindings to load, change and reload app to switch bindings
-BINDINGS_FILE = 'bindings/WOW.ini'
-# Rotation file to load, change and reload app to switch rotations
-ROTATION_FILE = 'rotations/WOW_warrior_arms.ini'
-# Delay between each ability in the rotation
-ABILITY_DELAY = 0.1
-# Delay between each rotation loop
-KEEP_RUNNING_DELAY = 1
-# Delay between each run loop to detect hotkeys and reduce CPU usage.
-RUN_LOOP_DELAY = 1
-# Delay to wait for button presses to be registered
-BUTTON_DELAY = 0.1
+# Read Application Variables from config.ini
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-# Hotkeys
-# Refer to the keyboard docs for information on hotkeys and their syntax.
-# https://github.com/boppreh/keyboard#keyboard.add_hotkey
-# Toggle the rotation
-TOGGLE_ROTATION = 'DEL'
-# Exit the application
-EXIT_PROGRAM = 'shift+x'
+BINDINGS_FILE = config.get('Application', 'bindings_file')
+ROTATION_FILE = config.get('Application', 'rotation_file')
+ABILITY_DELAY = config.getfloat('Application', 'ability_delay')
+KEEP_RUNNING_DELAY = config.getfloat('Application', 'keep_running_delay')
+RUN_LOOP_DELAY = config.getfloat('Application', 'run_loop_delay')
+BUTTON_DELAY = config.getfloat('Application', 'button_delay')
+TOGGLE_ROTATION = config.get('Application', 'toggle_rotation')
+EXIT_PROGRAM = config.get('Application', 'exit_program')
+
+#############################################
+
 
 #############################################
 # Gamepad Controls
@@ -140,10 +135,10 @@ def reset():
 
 # Get bindings from bindings file
 config = configparser.ConfigParser()
-config.read(BINDINGS_FILE)
+config.read('bindings/' + BINDINGS_FILE)
 
 buttons = {}
-for button, ability in config['bindings'].items():
+for button, ability in config['Bindings'].items():
     # check if ability is bound to a button
     if ability != 'None':
         buttons[ability] = button.upper()
@@ -227,7 +222,7 @@ def run_loop():
     while thread_running:
         if keep_running:
             print("Running rotation...")
-            config.read(ROTATION_FILE)
+            config.read('rotations/' + ROTATION_FILE)
             rotation = config['ROT']['Rotation'].split('\n')
 
             for ability in rotation:
