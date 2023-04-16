@@ -1,8 +1,28 @@
 {
-    "name": "PWA INI Editor",
-    "short_name": "INI Editor",
+    "name": "ROTUI - Config Editor",
+    "short_name": "ROTUI",
+    "description": "A user-friendly interface to edit configuration files for the ROTUI app.",
+    "icons": [
+        {
+            "src": "../assets/ROT144.png",
+            "sizes": "144x144",
+            "type": "image/png"
+        },
+        {
+            "src": "../assets/ROT192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable"
+        },
+        {
+            "src": "../assets/ROT.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
     "start_url": "index.html",
     "display": "standalone",
-    "background_color": "#ffffff",
-    "scope": "./"
+    "scope": "./",
+    "background_color": "#0D47A1",
+    "theme_color": "#ffc600"
 }

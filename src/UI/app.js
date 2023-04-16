@@ -27,8 +27,12 @@ function buildForm(ini, id) {
             keyLabel.innerText = key;
             kvpDiv.appendChild(keyLabel);
             let valueInput;
+            if (key === 'Rotation' || key === 'Name') {
+                keyLabel.className = 'rotation-label';
+            }
             if (key === 'Rotation') {
                 valueInput = document.createElement('textarea');
+                valueInput.className = 'rotation';
                 valueInput.name = `${section}.${key}`;
                 let value = ini[section][key];
                 // convert string array to array
@@ -44,6 +48,7 @@ function buildForm(ini, id) {
                 keyLabel.style.alignSelf = 'flex-start';
             } else {
                 valueInput = document.createElement('input');
+                valueInput.className = 'rotation-input';
                 valueInput.type = 'text';
                 valueInput.name = `${section}.${key}`;
                 valueInput.value = ini[section][key];
@@ -102,7 +107,13 @@ function parseINI(config) {
 }
 
 
-configFileInput.addEventListener('change', handleConfigSelect);
+configFileInput.addEventListener('change', (event) => {
+    handleConfigSelect(event);
+    const file = event.target.files[0];
+    const label = document.querySelector(`label[for="${event.target.id}"]`);
+    label.innerText = file.name;
+});
+
 const configForm = document.getElementById('config-file-form');
 configForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -229,7 +240,12 @@ function saveFormData(formData) {
 }
 
 const bindingsFileInput = document.getElementById('bindings-file-input');
-bindingsFileInput.addEventListener('change', handleBindingsSelect);
+bindingsFileInput.addEventListener('change', (event) => {
+    handleBindingsSelect(event);
+    const file = event.target.files[0];
+    const label = document.querySelector(`label[for="${event.target.id}"]`);
+    label.innerText = file.name;
+});
 
 async function handleBindingsSelect(event) {
     const file = event.target.files[0];
@@ -239,7 +255,12 @@ async function handleBindingsSelect(event) {
 }
 
 const rotationsFileInput = document.getElementById('rotations-file-input');
-rotationsFileInput.addEventListener('change', handleRotationsSelect);
+rotationsFileInput.addEventListener('change', (event) => {
+    handleRotationsSelect(event);
+    const file = event.target.files[0];
+    const label = document.querySelector(`label[for="${event.target.id}"]`);
+    label.innerText = file.name;
+});
 
 async function handleRotationsSelect(event) {
     const file = event.target.files[0];
@@ -265,3 +286,14 @@ newRotationsButton.addEventListener('click', () => {
     };
     buildForm(rotations, 'rotations-file-form');
 });
+
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker
+        .register('service-worker.js')
+        .then((registration) => {
+            console.log('Service worker registered:', registration);
+        })
+        .catch((error) => {
+            console.log('Service worker registration failed:', error);
+        });
+}

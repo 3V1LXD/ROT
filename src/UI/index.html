@@ -3,7 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>PWA INI Editor</title>
+    <title>ROTUI - Config Editor</title>
+    <meta
+      name="description"
+      content="A user-friendly interface to edit configuration files for the ROTUI app."
+    />
+    <meta name="theme-color" content="#ffc600" />
     <link rel="manifest" href="manifest.json" />
     <!-- Add Bootstrap CSS -->
     <link
@@ -15,6 +20,13 @@
     <link rel="stylesheet" href="app.css" />
   </head>
   <body>
+    <!-- Application Header -->
+    <header class="app-header">
+      <div class="hero-image">
+        <img src="../assets/ROT.webp" alt="ROTUI Logo" />
+      </div>
+      <h1>ROTUI - Config Editor</h1>
+    </header>
     <!-- Tab navigation -->
     <ul class="nav nav-tabs" id="configTab" role="tablist">
       <li class="nav-item" role="presentation">
@@ -63,7 +75,13 @@
         aria-labelledby="config-tab"
       >
         <!-- Config.ini editing interface -->
-        <input type="file" id="config-file-input" />
+        <input type="file" id="config-file-input" class="custom-file-input" />
+        <label
+          for="config-file-input"
+          id="config-file-label"
+          class="custom-file-label"
+          >Select file</label
+        >
         <div id="config-file-content">
           <form id="config-file-form"></form>
         </div>
@@ -76,8 +94,17 @@
       >
         <!-- Bindings editing interface -->
         <div class="bindings-load-buttons">
-          <input type="file" id="bindings-file-input" />
-          <!-- add button to create new bindings file -->
+          <input
+            type="file"
+            id="bindings-file-input"
+            class="custom-file-input"
+          />
+          <label
+            for="bindings-file-input"
+            id="bindings-file-label"
+            class="custom-file-label"
+            >Select file</label
+          >
           <button id="create-bindings-file">New</button>
         </div>
         <div id="bindings-file-content">
@@ -92,8 +119,17 @@
       >
         <!-- Rotations editing interface -->
         <div class="rotations-load-buttons">
-          <input type="file" id="rotations-file-input" />
-          <!-- add button to create new rotations file -->
+          <input
+            type="file"
+            id="rotations-file-input"
+            class="custom-file-input"
+          />
+          <label
+            for="rotations-file-input"
+            id="rotations-file-label"
+            class="custom-file-label"
+            >Select file</label
+          >
           <button id="create-rotations-file">New</button>
         </div>
         <div id="rotations-file-content">
@@ -102,7 +138,6 @@
       </div>
     </div>
     <script type="module" src="app.js"></script>
-    <!-- Add jQuery and Bootstrap JS -->
     <script
       src="https://code.jquery.com/jquery-3.6.4.min.js"
       integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="

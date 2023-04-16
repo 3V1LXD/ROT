@@ -2,12 +2,13 @@ self.addEventListener('install', (event) => {
     console.log('Service worker installed');
 });
 
-const cacheName = 'pwa-ini-editor-v1';
+const cacheName = 'ROTUI-v1';
 const filesToCache = [
     './',
     './index.html',
     './manifest.json',
-    './app.js'
+    './app.js',
+    './app.css',
 ];
 
 self.addEventListener('install', (event) => {
