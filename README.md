@@ -76,7 +76,10 @@ When running the script, it will prompt you to press a specific hotkey combinati
 3. Create a folder called `rotations` in the script's directory and add rotation configuration files for different game classes or builds. An example can be found in the repository.
 
 4. Run the UI application using the following command and configure the script's settings, bindings, and rotations:
+
    `python ROTUI.py`
+
+   this will open the UI in a browser and cache it locally for offline use. So you can use it without running the UI application again.
 
 5. Run the script using the following command:
 
