@@ -75,13 +75,16 @@ When running the script, it will prompt you to press a specific hotkey combinati
 
 3. Create a folder called `rotations` in the script's directory and add rotation configuration files for different game classes or builds. An example can be found in the repository.
 
-4. Run the script using the following command:
+4. Run the UI application using the following command and configure the script's settings, bindings, and rotations:
+   `python ROTUI.py`
 
-`python ROT.py`
+5. Run the script using the following command:
 
-5. The script will prompt you to press a specific hotkey combination (e.g., 'DEL') to toggle the combat rotation on and off. Press the hotkey to start or stop the script's ability control. I chose 'DEL' because it is easy for me. You can choose any key you want by changing the value of the `TOGGLE_ROTATION` constant in the script's application variables.
+   `python ROT.py`
 
-6. To exit the script, press the specified hotkey combination for exit (e.g., 'Shift+X'). You can change this by changing the value of the `EXIT_PROGRAM` constant in the script.
+6. The script will prompt you to press a specific hotkey combination (e.g., 'DEL') to toggle the combat rotation on and off. Press the hotkey to start or stop the script's ability control. I chose 'DEL' because it is easy for me. You can choose any key you want by changing the value of the `TOGGLE_ROTATION` constant in the script's application variables.
+
+7. To exit the script, press the specified hotkey combination for exit (e.g., 'Shift+X'). You can change this by changing the value of the `EXIT_PROGRAM` constant in the script.
 
 Please note that the usage of this script for automating gameplay, especially in a manner that violates a game's terms of service or EULA, is not recommended. Use this script responsibly, and focus on the educational value and understanding of the underlying concepts.
 
