@@ -5,7 +5,7 @@ self.addEventListener('install', (event) => {
 const cacheName = 'ROTUI-v1';
 const filesToCache = [
     './',
-    '../assets/',
+    '../assets/ROT.webp',
     './index.html',
     './manifest.json',
     './app.js',
