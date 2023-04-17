@@ -199,12 +199,10 @@ def activate_ability(ability):
     for bound_ability, buttons in BINDINGS.items():
         if bound_ability in ability:
             print(f'Activating {bound_ability} with {buttons}')
-            trigger_type = buttons.split('_')[0]
-            if trigger_type in ['LT', 'LTRT', 'RT']:
-                trigger_action(trigger_type)
-                buttons = buttons.replace(trigger_type + '_', '')
-            else:
-                trigger_type = None
+            trigger = buttons.split('_')[0]
+            if trigger in ['LT', 'LTRT', 'RT']:
+                trigger_action(trigger)
+                buttons = buttons.replace(trigger + '_', '')
 
             smash(buttons)
             reset()
