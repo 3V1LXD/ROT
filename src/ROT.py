@@ -3,6 +3,7 @@ import configparser
 import threading
 import keyboard
 import time
+import sys
 
 #############################################
 # Application Variables
@@ -71,13 +72,7 @@ def left_trigger():
     Fully press the left trigger on the gamepad.
     """
     gamepad.left_trigger(value=255)
-
-
-def lt_release():
-    """
-    Release the left trigger on the gamepad.
-    """
-    gamepad.left_trigger(value=0)
+    update()
 
 
 def right_trigger():
@@ -85,13 +80,7 @@ def right_trigger():
     Fully press the right trigger on the gamepad.
     """
     gamepad.right_trigger(value=255)
-
-
-def rt_release():
-    """
-    Release the right trigger on the gamepad.
-    """
-    gamepad.right_trigger(value=0)
+    update()
 
 
 def lr_trigger():
@@ -100,6 +89,23 @@ def lr_trigger():
     """
     gamepad.left_trigger(value=255)
     gamepad.right_trigger(value=255)
+    update()
+
+
+def lt_release():
+    """
+    Release the left trigger on the gamepad.
+    """
+    gamepad.left_trigger(value=0)
+    update()
+
+
+def rt_release():
+    """
+    Release the right trigger on the gamepad.
+    """
+    gamepad.right_trigger(value=0)
+    update()
 
 
 def lrt_release():
@@ -108,6 +114,7 @@ def lrt_release():
     """
     gamepad.left_trigger(value=0)
     gamepad.right_trigger(value=0)
+    update()
 
 
 def press(button):
@@ -116,6 +123,7 @@ def press(button):
     :param button: The button to press.
     """
     gamepad.press_button(button=button)
+    update()
 
 
 def update():
@@ -123,6 +131,7 @@ def update():
     Update the gamepad state.
     """
     gamepad.update()
+    time.sleep(BUTTON_DELAY)
 
 
 def reset():
@@ -130,20 +139,18 @@ def reset():
     Reset the gamepad state by releasing all buttons and triggers.
     """
     gamepad.reset()
+    gamepad.update()
 #############################################
 
 
-# Get bindings from bindings file
 config = configparser.ConfigParser()
 config.read('bindings/' + BINDINGS_FILE)
 
 buttons = {}
 for button, ability in config['Bindings'].items():
-    # check if ability is bound to a button
     if ability != 'None':
         buttons[ability] = button.upper()
 
-# Flags to control the while loop and background thread
 keep_running = False
 thread_running = True
 
@@ -152,39 +159,26 @@ def trigger_action(trigger_type):
     """
     Perform the specified trigger action and update the gamepad state.
 
-    :param trigger_type: The trigger action to be performed (e.g., 'LT_', 'LTRT_', or 'RT_')
+    :param trigger_type: The trigger action to be performed (e.g., 'LT', 'LTRT', or 'RT')
     """
     trigger_func = {
-        "LT_": left_trigger,
-        "LTRT_": lambda: [left_trigger(), right_trigger()],
-        "RT_": right_trigger,
+        "LT": left_trigger,
+        "LTRT": lr_trigger,
+        "RT": right_trigger,
     }
 
     if trigger_type in trigger_func:
         trigger_func[trigger_type]()
-        update()
-    else:
-        lt_release()
-        update()
-        rt_release()
-        update()
 
 
-def press_button(button, bound_ability):
+def press_button(button):
     """
     Press the specified button and print the bound ability being activated.
 
     :param button: The button to be pressed
     :param bound_ability: The ability associated with the button
     """
-    trigger_prefixes = ['LT_', 'LTRT_', 'RT_']
-    for prefix in trigger_prefixes:
-        if prefix in button:
-            button = button.replace(prefix, '')
-
     press(gpad[button])
-    print(f'Activating {bound_ability} with {button}')
-    update()
 
 
 def activate_ability(ability):
@@ -202,13 +196,16 @@ def activate_ability(ability):
 
     for bound_ability, button in buttons.items():
         if bound_ability in ability:
-            trigger_type = button.split('_')[0] + '_'
-            trigger_action(trigger_type)
-            time.sleep(BUTTON_DELAY)
-            press_button(button, bound_ability)
-            time.sleep(BUTTON_DELAY)
+            print(f'Activating {bound_ability} with {button}')
+            trigger_type = button.split('_')[0]
+            if trigger_type in ['LT', 'LTRT', 'RT']:
+                trigger_action(trigger_type)
+                button = button.replace(trigger_type + '_', '')
+            else:
+                trigger_type = None
+
+            press_button(button)
             reset()
-            update()
             time.sleep(ability_delay)
 
 
@@ -218,23 +215,18 @@ def run_loop():
     The loop runs indefinitely as long as thread_running is True, but the rotation execution is controlled by the keep_running flag.
     """
     global keep_running, thread_running
-
     while thread_running:
         if keep_running:
-            print("Running rotation...")
+            print(F"Running rotation... [{ROTATION_FILE}]")
             config.read('rotations/' + ROTATION_FILE)
-            # Rotation = ['Auto Attack','Charge,500','Rallying Cry','Warbreaker','Sweeping Strikes','Rend','Overpower','Overpower','Mortal Strike','Execute','Pummel','Cleave','Avatar,3000','Overpower','Execute','Impending Victory','Die by the Sword','Bitter Immunity','Whirlwind','Overpower','Bladestorm,3000','Execute','Slam']
             rotation = config['ROT']['Rotation'].replace('[', "")
             rotation = rotation.replace(']', "")
-            # split by "','"
             rotation = rotation.split("','")
-
-            # remove quotes
             rotation = [x.replace("'", "") for x in rotation]
-            print(rotation)
 
             for ability in rotation:
                 if keep_running:
+                    reset()
                     activate_ability(ability)
 
             time.sleep(KEEP_RUNNING_DELAY)
@@ -248,13 +240,10 @@ def toggle_loop():
     """
     global keep_running
     keep_running = not keep_running
-    print("Starting rotation" if keep_running else "Stopping rotation")
+
     if not keep_running:
-        # reset controller on stop
-        lrt_release()
-        update()
         reset()
-        update()
+        print("Stopped.")
 
 
 def exit_program():
@@ -264,6 +253,7 @@ def exit_program():
     global thread_running
     thread_running = False
     print("Exiting...")
+    sys.exit()
 
 
 def main():
@@ -273,15 +263,12 @@ def main():
     loop_thread = threading.Thread(target=run_loop)
     loop_thread.start()
 
-    # Set up the hotkey to toggle the loop (for example, 'DEL')
     keyboard.add_hotkey(TOGGLE_ROTATION, toggle_loop)
-    # Set up the hotkey to exit the program (for example, 'shift+x')
     keyboard.add_hotkey(EXIT_PROGRAM, exit_program)
 
     print(
         f"Press '{TOGGLE_ROTATION}' to toggle the rotation. Press '{EXIT_PROGRAM}' to exit.")
 
-    # Keep the main thread running so the hotkeys can be detected
     loop_thread.join()
 
 
