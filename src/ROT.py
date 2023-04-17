@@ -117,7 +117,7 @@ def lrt_release():
     update()
 
 
-def trigger_action(trigger_type):
+def pull(trigger_type):
     """
     Perform the specified trigger action and update the gamepad state.
 
@@ -201,7 +201,7 @@ def activate_ability(ability):
             print(f'Activating {bound_ability} with {buttons}')
             trigger = buttons.split('_')[0]
             if trigger in ['LT', 'LTRT', 'RT']:
-                trigger_action(trigger)
+                pull(trigger)
                 buttons = buttons.replace(trigger + '_', '')
 
             smash(buttons)
