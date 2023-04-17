@@ -117,44 +117,6 @@ def lrt_release():
     update()
 
 
-def press(button):
-    """
-    Press a button on the gamepad.
-    :param button: The button to press.
-    """
-    gamepad.press_button(button=button)
-    update()
-
-
-def update():
-    """
-    Update the gamepad state.
-    """
-    gamepad.update()
-    time.sleep(BUTTON_DELAY)
-
-
-def reset():
-    """
-    Reset the gamepad state by releasing all buttons and triggers.
-    """
-    gamepad.reset()
-    gamepad.update()
-#############################################
-
-
-config = configparser.ConfigParser()
-config.read('bindings/' + BINDINGS_FILE)
-
-buttons = {}
-for button, ability in config['Bindings'].items():
-    if ability != 'None':
-        buttons[ability] = button.upper()
-
-keep_running = False
-thread_running = True
-
-
 def trigger_action(trigger_type):
     """
     Perform the specified trigger action and update the gamepad state.
@@ -171,14 +133,54 @@ def trigger_action(trigger_type):
         trigger_func[trigger_type]()
 
 
-def press_button(button):
+def press(button):
+    """
+    Press a button on the gamepad.
+    :param button: The button to press.
+    """
+    gamepad.press_button(button=button)
+    update()
+
+
+def smash(buttons):
     """
     Press the specified button and print the bound ability being activated.
 
     :param button: The button to be pressed
     :param bound_ability: The ability associated with the button
     """
-    press(gpad[button])
+    for button in buttons.split('_'):
+        gamepad.press_button(button=gpad[button])
+    update()
+
+
+def update():
+    """
+    Update the gamepad state.
+    """
+    gamepad.update()
+    time.sleep(BUTTON_DELAY)
+
+
+def reset():
+    """
+    Reset the gamepad state by releasing all BINDINGS and triggers.
+    """
+    gamepad.reset()
+    gamepad.update()
+#############################################
+
+
+config = configparser.ConfigParser()
+config.read('bindings/' + BINDINGS_FILE)
+
+BINDINGS = {}
+for button, ability in config['Bindings'].items():
+    if ability != 'None':
+        BINDINGS[ability] = button.upper()
+
+keep_running = False
+thread_running = True
 
 
 def activate_ability(ability):
@@ -194,17 +196,17 @@ def activate_ability(ability):
     else:
         ability_delay = ABILITY_DELAY
 
-    for bound_ability, button in buttons.items():
+    for bound_ability, buttons in BINDINGS.items():
         if bound_ability in ability:
-            print(f'Activating {bound_ability} with {button}')
-            trigger_type = button.split('_')[0]
+            print(f'Activating {bound_ability} with {buttons}')
+            trigger_type = buttons.split('_')[0]
             if trigger_type in ['LT', 'LTRT', 'RT']:
                 trigger_action(trigger_type)
-                button = button.replace(trigger_type + '_', '')
+                buttons = buttons.replace(trigger_type + '_', '')
             else:
                 trigger_type = None
 
-            press_button(button)
+            smash(buttons)
             reset()
             time.sleep(ability_delay)
 
