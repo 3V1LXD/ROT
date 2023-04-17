@@ -117,20 +117,20 @@ def lrt_release():
     update()
 
 
-def pull(trigger_type):
+def pull(trigger):
     """
     Perform the specified trigger action and update the gamepad state.
 
-    :param trigger_type: The trigger action to be performed (e.g., 'LT', 'LTRT', or 'RT')
+    :param trigger: The trigger action to be performed (e.g., 'LT', 'LTRT', or 'RT')
     """
-    trigger_func = {
+    trigger_def = {
         "LT": left_trigger,
         "LTRT": lr_trigger,
         "RT": right_trigger,
     }
 
-    if trigger_type in trigger_func:
-        trigger_func[trigger_type]()
+    if trigger in trigger_def:
+        trigger_def[trigger]()
 
 
 def press(button):
