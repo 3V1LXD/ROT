@@ -12,15 +12,14 @@ import sys
 config = configparser.ConfigParser()
 config.read('config.ini')
 
-BINDINGS_FILE = config.get('Application', 'bindings_file')
-ROTATION_FILE = config.get('Application', 'rotation_file')
-ABILITY_DELAY = config.getfloat('Application', 'ability_delay')
-KEEP_RUNNING_DELAY = config.getfloat('Application', 'keep_running_delay')
-RUN_LOOP_DELAY = config.getfloat('Application', 'run_loop_delay')
-BUTTON_DELAY = config.getfloat('Application', 'button_delay')
-TOGGLE_ROTATION = config.get('Application', 'toggle_rotation')
-EXIT_PROGRAM = config.get('Application', 'exit_program')
-
+BINDINGS_FILE = config.get('Application', 'BINDINGS_FILE')
+ROTATION_FILE = config.get('Application', 'ROTATION_FILE')
+ABILITY_DELAY = config.getfloat('Application', 'ABILITY_DELAY')
+KEEP_RUNNING_DELAY = config.getfloat('Application', 'KEEP_RUNNING_DELAY')
+RUN_LOOP_DELAY = config.getfloat('Application', 'RUN_LOOP_DELAY')
+BUTTON_DELAY = config.getfloat('Application', 'BUTTON_DELAY')
+TOGGLE_ROTATION = config.get('Application', 'TOGGLE_ROTATION')
+EXIT_PROGRAM = config.get('Application', 'EXIT_PROGRAM')
 #############################################
 
 
@@ -171,6 +170,11 @@ def reset():
 #############################################
 
 
+#############################################
+# Run Loop Variables
+
+
+# Read bindings
 config = configparser.ConfigParser()
 config.read('bindings/' + BINDINGS_FILE)
 
@@ -179,8 +183,14 @@ for button, ability in config['Bindings'].items():
     if ability != 'None':
         BINDINGS[ability] = button.upper()
 
+# Loop control variables
 keep_running = False
 thread_running = True
+#############################################
+
+
+#############################################
+# ROT Definitions
 
 
 def activate_ability(ability):
